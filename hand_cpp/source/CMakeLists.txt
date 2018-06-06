@@ -21,9 +21,9 @@ ADD_DEFINITIONS(
 # It will help against unwanted bugs
 # INCLUDE(copts_stricter_warnings.cmake)
 
-SET(BUILD_SHARED_LIBS OFF)
+SET(BUILD_SHARED_LIBS ON)
 
-find_package(OpenGL)      
+find_package(OpenGL)
 find_package(GLUT)
 FIND_PACKAGE(Boost REQUIRED COMPONENTS system)
 FIND_PACKAGE(OpenCV REQUIRED)

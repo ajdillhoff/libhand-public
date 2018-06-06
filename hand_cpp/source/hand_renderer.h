@@ -29,6 +29,8 @@
 # include "hand_pose.h"
 # include "scene_spec.h"
 
+# include "OGRE/OgreVector3.h"
+
 namespace libhand {
 
 using namespace std;
@@ -98,6 +100,9 @@ class HandRenderer {
   // 
   typedef map<string,cv::Vec3d> JointPositionMap;
   void walk_bones(JointPositionMap&jointPositionMap);
+
+  void GetMeshVertices(size_t &vertex_count,
+          Ogre::Vector3* &vertices);
  private:
   // PIMPL (Private Implementation pointer)
   HandRendererPrivate *private_;
