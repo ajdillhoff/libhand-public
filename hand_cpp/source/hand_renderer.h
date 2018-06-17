@@ -96,13 +96,12 @@ class HandRenderer {
   bool z_inverted() const;
   double z_near() const;
   double z_far() const;
-  
-  // 
-  typedef map<string,cv::Vec3d> JointPositionMap;
-  void walk_bones(JointPositionMap&jointPositionMap);
 
-  void GetMeshVertices(size_t &vertex_count,
-          Ogre::Vector3* &vertices);
+  //
+  typedef map<string, cv::Vec3d> JointPositionMap;
+  void walk_bones(JointPositionMap &jointPositionMap);
+
+  void GetMeshVertices(size_t &vertex_count, Ogre::Vector3* &vertices);
  private:
   // PIMPL (Private Implementation pointer)
   HandRendererPrivate *private_;
