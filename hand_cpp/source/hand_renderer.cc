@@ -132,13 +132,15 @@ namespace libhand {
                 Ogre::Vector3 worldview = camera_->getViewMatrix() * position;
                 z = worldview.z;
                 //homogenous clip space, between -1, 1 is in frustum
-                Ogre::Vector3 hcsposition = camera_->getProjectionMatrix() * worldview;
+                /* Ogre::Vector3 hcsposition = camera_->getProjectionMatrix() * worldview; */
 
                 /* absolute */
-                x = render_width() / 2;
-                y = render_height() / 2;
-                x += ( x * hcsposition.x );
-                y += ( y * -hcsposition.y );
+                /* x = render_width() / 2; */
+                /* y = render_height() / 2; */
+                /* x += ( x * hcsposition.x ); */
+                /* y += ( y * -hcsposition.y ); */
+                x = worldview.x;
+                y = worldview.y;
             }
 
             // http://www.ogre3d.org/forums/viewtopic.php?f=1&t=55259
@@ -242,6 +244,11 @@ namespace libhand {
                 // bones ~ joints in Ogre nomenclature
                 emit_bone(depth, screen_x, screen_y, screen_z, name, pos_world,jointPositionMap);
 
+                /*  DEBUG  */
+                // Print the bone name and local orientation
+                Quaternion local_orientation = bone->getOrientation();
+                cout << name << " " << local_orientation << endl;
+
                 // call recursively on the children
                 if (bone->numChildren() == 0) {
                     // is finger tip?
@@ -315,8 +322,8 @@ namespace libhand {
     };
 
     // singleton
-    static shared_ptr<Root> root_;
-    static shared_ptr<RenderWindow> window_;
+    static boost::shared_ptr<Root> root_;
+    static boost::shared_ptr<RenderWindow> window_;
 
     // Forwarding HandRenderer calls to HandRendererPrivate
     HandRenderer::HandRenderer() : private_(new HandRendererPrivate) {}

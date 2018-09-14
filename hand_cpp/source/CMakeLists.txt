@@ -7,7 +7,7 @@ IF(APPLE)
   SET(CMAKE_FIND_LIBRARY_SUFFIXES ".a;.framework;.dylib;.so")
 ELSE(APPLE)
   IF(UNIX)
-    LIST(APPEND CMAKE_MODULE_PATH "/usr/lib/OGRE/cmake/")
+    LIST(APPEND CMAKE_MODULE_PATH "/usr/share/OGRE/cmake/modules")
     LIST(APPEND LibHand_EXTRA_LIBS "-ldl -lXt")
     ADD_DEFINITIONS(-fPIC)
   ENDIF()
@@ -16,7 +16,7 @@ ENDIF(APPLE)
 ADD_DEFINITIONS(
   -O3
   ) # -std=gnu++0x
-  
+
 # Uncomment the following line for development of the library
 # It will help against unwanted bugs
 # INCLUDE(copts_stricter_warnings.cmake)
@@ -59,7 +59,7 @@ ADD_LIBRARY(hand_utils
   file_tools.cc
   image_utils.cc
   printfstring.cc
-  simple_slider.cc  
+  simple_slider.cc
   text_printer.cc)
 
 TARGET_LINK_LIBRARIES(hand_utils ${OpenCV_LIBS})
@@ -101,6 +101,12 @@ message(STATUS "OgreLib: ${OGRE_LIBRARY}")
 message(STATUS "Ogre: ${OGRE_LIBRARIES}")
 message(STATUS "Ogre GL: ${OGRE_RenderSystem_GL_LIBRARIES}")
 message(STATUS "Ogre Octree: ${OGRE_Plugin_OctreeSceneManager_LIBRARIES}")
+message(STATUS "OGRE_INCLUDE_DIRS: ${OGRE_INCLUDE_DIRS}")
+message(STATUS "OGRE_RenderSystem_GL_INCLUDE_DIR: ${OGRE_RenderSystem_GL_INCLUDE_DIR}")
+message(STATUS "OGRE_Plugin_BSPSceneManager_INCLUDE_DIR: ${OGRE_Plugin_BSPSceneManager_INCLUDE_DIR}")
+message(STATUS "OGRE_Plugin_OctreeSceneManager_INCLUDE_DIR: ${OGRE_Plugin_OctreeSceneManager_INCLUDE_DIR}")
+message(STATUS "OGRE_Plugin_PCZSceneManager_INCLUDE_DIR: ${OGRE_Plugin_PCZSceneManager_INCLUDE_DIR}")
+message(STATUS "OGRE_Plugin_ParticleFX_INCLUDE_DIR: ${OGRE_Plugin_ParticleFX_INCLUDE_DIR}")
 message(STATUS "X11_FOUND: ${X11_FOUND}")
 message(STATUS "XAW_LIBRARY: ${XAW_LIBRARY}")
 message(STATUS "OGRE_LIBRARY_FWK: ${OGRE_LIBRARY_FWK}")
