@@ -135,12 +135,12 @@ namespace libhand {
                 Ogre::Vector3 hcsposition = camera_->getProjectionMatrix() * worldview;
 
                 /* absolute */
-                x = render_width() / 2;
-                y = render_height() / 2;
-                x += ( x * hcsposition.x );
-                y += ( y * -hcsposition.y );
-                /* x = worldview.x; */
-                /* y = worldview.y; */
+                /* x = render_width() / 2; */
+                /* y = render_height() / 2; */
+                /* x += ( x * hcsposition.x ); */
+                /* y += ( y * -hcsposition.y ); */
+                x = worldview.x;
+                y = worldview.y;
             }
 
             // http://www.ogre3d.org/forums/viewtopic.php?f=1&t=55259
