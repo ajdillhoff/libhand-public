@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skeleton >
+  <bones >
+    <bone id="0" name="root" >
+      <position x="0.000000" y="0.000000" z="0.000000" />
+      <rotation angle="0.000000" >
+        <axis x="0.000000" y="0.000000" z="0.000000" />
+      </rotation>
+    </bone>
+    <bone id="1" name="metacarpals" >
+      <position x="1.582935" y="0.014422" z="0.023991" />
+      <rotation angle="2.165787" >
+        <axis x="-0.566265" y="0.562469" z="0.602472" />
+      </rotation>
+    </bone>
+    <bone id="2" name="finger5joint1" >
+      <position x="-0.175466" y="0.570669" z="-0.411368" />
+      <rotation angle="0.520235" >
+        <axis x="-0.188902" y="-0.065144" z="0.979833" />
+      </rotation>
+    </bone>
+    <bone id="3" name="finger5joint2" >
+      <position x="0.000000" y="1.056272" z="-0.000000" />
+      <rotation angle="1.653710" >
+        <axis x="-0.167985" y="-0.943434" z="-0.285856" />
+      </rotation>
+    </bone>
+    <bone id="4" name="finger5joint3" >
+      <position x="-0.000000" y="0.687335" z="-0.000000" />
+      <rotation angle="0.221029" >
+        <axis x="-0.870562" y="0.208042" z="0.445923" />
+      </rotation>
+    </bone>
+    <bone id="5" name="Bone" >
+      <position x="-0.000000" y="1.561277" z="0.000000" />
+      <rotation angle="1.417989" >
+        <axis x="-0.051512" y="0.129325" z="-0.990263" />
+      </rotation>
+    </bone>
+    <bone id="6" name="finger1joint1" >
+      <position x="0.000000" y="0.832187" z="0.000000" />
+      <rotation angle="1.246112" >
+        <axis x="-0.165391" y="-0.350628" z="0.921795" />
+      </rotation>
+    </bone>
+    <bone id="7" name="finger1joint2" >
+      <position x="-0.000000" y="0.565178" z="0.000000" />
+      <rotation angle="0.434703" >
+        <axis x="-0.698065" y="0.713304" z="0.062473" />
+      </rotation>
+    </bone>
+    <bone id="8" name="finger1joint3" >
+      <position x="0.000000" y="0.428684" z="-0.000000" />
+      <rotation angle="0.457170" >
+        <axis x="-0.971260" y="-0.200417" z="-0.128401" />
+      </rotation>
+    </bone>
+    <bone id="9" name="Bone.001" >
+      <position x="-0.000000" y="1.561277" z="0.000000" />
+      <rotation angle="1.078225" >
+        <axis x="0.198094" y="-0.096377" z="-0.975433" />
+      </rotation>
+    </bone>
+    <bone id="10" name="finger2joint1" >
+      <position x="0.000000" y="0.633883" z="0.000000" />
+      <rotation angle="1.208946" >
+        <axis x="-0.615029" y="-0.126242" z="0.778333" />
+      </rotation>
+    </bone>
+    <bone id="11" name="finger2joint2" >
+      <position x="-0.000000" y="0.865149" z="-0.000000" />
+      <rotation angle="0.189605" >
+        <axis x="-0.729114" y="0.454877" z="0.511354" />
+      </rotation>
+    </bone>
+    <bone id="12" name="finger2joint3" >
+      <position x="0.000000" y="0.379616" z="-0.000000" />
+      <rotation angle="0.273692" >
+        <axis x="-0.845287" y="0.277430" z="0.456646" />
+      </rotation>
+    </bone>
+    <bone id="13" name="Bone.002" >
+      <position x="-0.000000" y="1.561277" z="0.000000" />
+      <rotation angle="0.419748" >
+        <axis x="0.641539" y="-0.405044" z="-0.651435" />
+      </rotation>
+    </bone>
+    <bone id="14" name="finger3joint1" >
+      <position x="0.000000" y="0.421510" z="-0.000000" />
+      <rotation angle="0.453149" >
+        <axis x="-0.858889" y="0.316033" z="0.403031" />
+      </rotation>
+    </bone>
+    <bone id="15" name="finger3joint2" >
+      <position x="0.000000" y="0.877181" z="0.000000" />
+      <rotation angle="0.732962" >
+        <axis x="-0.973675" y="-0.026622" z="0.226381" />
+      </rotation>
+    </bone>
+    <bone id="16" name="finger3joint3" >
+      <position x="-0.000000" y="0.647080" z="0.000000" />
+      <rotation angle="0.393353" >
+        <axis x="-0.892844" y="0.402960" z="0.201131" />
+      </rotation>
+    </bone>
+    <bone id="17" name="Bone.003" >
+      <position x="-0.000000" y="1.561277" z="0.000000" />
+      <rotation angle="1.269620" >
+        <axis x="0.708837" y="-0.544755" z="0.448099" />
+      </rotation>
+    </bone>
+    <bone id="18" name="finger4joint1" >
+      <position x="-0.000000" y="0.428619" z="0.000000" />
+      <rotation angle="1.294537" >
+        <axis x="-0.717712" y="0.548630" z="-0.428830" />
+      </rotation>
+    </bone>
+    <bone id="19" name="finger4joint2" >
+      <position x="0.000000" y="0.993359" z="-0.000000" />
+      <rotation angle="0.408272" >
+        <axis x="-0.997263" y="-0.058082" z="0.045746" />
+      </rotation>
+    </bone>
+    <bone id="20" name="finger4joint3" >
+      <position x="-0.000000" y="0.417063" z="-0.000000" />
+      <rotation angle="0.295062" >
+        <axis x="-0.957829" y="0.089187" z="-0.273158" />
+      </rotation>
+    </bone>
+  </bones>
+  <bonehierarchy >
+    <boneparent bone="metacarpals" parent="root" />
+    <boneparent bone="finger5joint1" parent="metacarpals" />
+    <boneparent bone="finger5joint2" parent="finger5joint1" />
+    <boneparent bone="finger5joint3" parent="finger5joint2" />
+    <boneparent bone="Bone" parent="metacarpals" />
+    <boneparent bone="finger1joint1" parent="Bone" />
+    <boneparent bone="finger1joint2" parent="finger1joint1" />
+    <boneparent bone="finger1joint3" parent="finger1joint2" />
+    <boneparent bone="Bone.001" parent="metacarpals" />
+    <boneparent bone="finger2joint1" parent="Bone.001" />
+    <boneparent bone="finger2joint2" parent="finger2joint1" />
+    <boneparent bone="finger2joint3" parent="finger2joint2" />
+    <boneparent bone="Bone.002" parent="metacarpals" />
+    <boneparent bone="finger3joint1" parent="Bone.002" />
+    <boneparent bone="finger3joint2" parent="finger3joint1" />
+    <boneparent bone="finger3joint3" parent="finger3joint2" />
+    <boneparent bone="Bone.003" parent="metacarpals" />
+    <boneparent bone="finger4joint1" parent="Bone.003" />
+    <boneparent bone="finger4joint2" parent="finger4joint1" />
+    <boneparent bone="finger4joint3" parent="finger4joint2" />
+  </bonehierarchy>
+  <animations />
+</skeleton>

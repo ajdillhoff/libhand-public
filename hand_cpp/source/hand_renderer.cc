@@ -244,11 +244,6 @@ namespace libhand {
                 // bones ~ joints in Ogre nomenclature
                 emit_bone(depth, screen_x, screen_y, screen_z, name, pos_world,jointPositionMap);
 
-                /*  DEBUG  */
-                // Print the bone name and local orientation
-                Quaternion local_orientation = bone->getOrientation();
-                cout << name << " " << local_orientation << endl;
-
                 // call recursively on the children
                 if (bone->numChildren() == 0) {
                     // is finger tip?
@@ -600,15 +595,16 @@ namespace libhand {
             initial_cam_distance_ = CameraHandDistance();
             camera_spec_= HandCameraSpec(initial_cam_distance());
 
-            camera_node_->setPosition(0,0,0);
-            camera_node_->resetOrientation();
-            camera_node_->setInheritOrientation(false);
-            camera_->setPosition(0,0,0);
-            camera_->setOrientation(Quaternion::IDENTITY);
-            // use FOV for ASUS Xtion.
-            camera_->setFOVy(Ogre::Radian(0.785398163));
-            double aspect_ratio = std::tan(1.01229097/2)/std::tan(0.785398163/2);
-            camera_->setAspectRatio(aspect_ratio);
+            // (Alex) These should be read from the scene file.
+            /* camera_node_->setPosition(0,0,0); */
+            /* camera_node_->resetOrientation(); */
+            /* camera_node_->setInheritOrientation(false); */
+            /* camera_->setPosition(0,0,0); */
+            /* camera_->setOrientation(Quaternion::IDENTITY); */
+            /* // use FOV for ASUS Xtion. */
+            /* camera_->setFOVy(Ogre::Radian(0.785398163)); */
+            /* double aspect_ratio = std::tan(1.01229097/2)/std::tan(0.785398163/2); */
+            /* camera_->setAspectRatio(aspect_ratio); */
         } catch(...) {
             DestroyScene();
 

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skeleton >
+  <bones >
+    <bone id="0" name="root" >
+      <position x="0.226471" y="0.208932" z="0.014473" />
+      <rotation angle="0.000000" >
+        <axis x="1.000000" y="0.000000" z="0.000000" />
+      </rotation>
+    </bone>
+    <bone id="1" name="finger1joint2" >
+      <position x="0.000000" y="0.000401" z="0.000160" />
+      <rotation angle="2.618258" >
+        <axis x="-0.781228" y="0.323280" z="0.534016" />
+      </rotation>
+    </bone>
+    <bone id="2" name="finger1joint3" >
+      <position x="-0.000000" y="0.428683" z="0.000000" />
+      <rotation angle="0.385216" >
+        <axis x="-0.802957" y="-0.595556" z="0.023958" />
+      </rotation>
+    </bone>
+  </bones>
+  <bonehierarchy >
+    <boneparent bone="finger1joint2" parent="root" />
+    <boneparent bone="finger1joint3" parent="finger1joint2" />
+  </bonehierarchy>
+  <animations />
+</skeleton>
