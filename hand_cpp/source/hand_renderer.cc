@@ -209,18 +209,20 @@ namespace libhand {
                     string name, Vector3 pos_world,
                     HandRenderer::JointPositionMap&jointPositionMap)
             {
-                for(int iter = 0; iter < depth; iter++) {
+                /* for(int iter = 0; iter < depth; iter++) { */
+                /*     printf("\t"); */
+                /*     printf("r(%s) @ (%f %f %f)\n",name.c_str(), */
+                /*         (double)screen_x,(double)screen_y,(double)0); */
+                /* } */
                     printf("\t");
-                    printf("r(%s) @ (%f %f %f)\n",name.c_str(),
-                        (double)screen_x,(double)screen_y,(double)0);
-                }
-                for(int iter = 0; iter < depth; iter++) {
-                    printf("\t");
-                    printf("w(%s) @ (%f %f %f)\n",name.c_str(),
-                        (double)pos_world.x,(double)pos_world.y,(double)pos_world.z);
-                }
+                    /* for(int iter = 0; iter < depth; iter++) { */
+                    /* printf("w(%s) @ (%f %f %f)\n",name.c_str(), */
+                    /*     (double)pos_world.x,(double)pos_world.y,(double)pos_world.z); */
+                /* } */
+                /* jointPositionMap[name] = cv::Vec3d( */
+                /*         (double)screen_x,(double)screen_y,(double)screen_z); */
                 jointPositionMap[name] = cv::Vec3d(
-                        (double)screen_x,(double)screen_y,(double)screen_z);
+                        (double)pos_world.x, (double)pos_world.y, (double)pos_world.z);
             }
 
             void walk_bones(HandRenderer::JointPositionMap &jointPositionMap, Node* bone = NULL, int depth = 0) {
@@ -244,7 +246,7 @@ namespace libhand {
 
                 // store the bone  information
                 // bones ~ joints in Ogre nomenclature
-                emit_bone(depth, screen_x, screen_y, screen_z, name, pos_world,jointPositionMap);
+                emit_bone(depth, screen_x, screen_y, screen_z, name, pos_world, jointPositionMap);
 
                 // call recursively on the children
                 if (bone->numChildren() == 0) {
