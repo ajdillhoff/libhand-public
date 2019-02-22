@@ -698,7 +698,45 @@ namespace libhand {
         //   
         //   camera_node_->setPosition(Vector3::ZERO);
         //   camera_->lookAt(hand_node_->getPosition());
+        
+        Matrix4 pm = camera_->getProjectionMatrixRS();
+        printf("projection: \n");
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                printf("%f ", pm[i][j]);
+            }
+            printf("\n");
+        }
+        Matrix4 vm = camera_->getViewMatrix();
+        printf("view: \n");
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                printf("%f ", vm[i][j]);
+            }
+            printf("\n");
+        }
+        Matrix4 wm = Matrix4();
+        camera_->getWorldTransforms(&wm);
+        printf("world: \n");
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                printf("%f ", wm[i][j]);
+            }
+            printf("\n");
+        }
 
+        Matrix4 tm = pm * vm * wm;
+        printf("transform: \n");
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                printf("%f ", tm[i][j]);
+            }
+            printf("\n");
+        }
+
+        Vector3 c_pos = camera_->getRealPosition();
+        printf("position: \n");
+        printf("%f %f %f\n", c_pos[0], c_pos[1], c_pos[2]);
         viewport_->clear();
         root_->renderOneFrame();
         //render_target_->update(false);

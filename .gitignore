@@ -15,3 +15,4 @@ hand_cpp/.kdev4/
 *kdev4
 *.a
 *.log
+*.so
