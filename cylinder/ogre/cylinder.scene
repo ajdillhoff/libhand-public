@@ -53,7 +53,7 @@
       <rotation qw="1" qx="0" qy="0" qz="0" />
       <scale x="1.000000" y="1.000000" z="1.000000" />
       <camera fov="60" name="Camera" projectionType="perspective" >
-        <clipping far="-1" near="1" />
+        <clipping far="1" near="-1" />
       </camera>
     </node>
   </nodes>

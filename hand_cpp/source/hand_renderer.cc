@@ -130,17 +130,36 @@ namespace libhand {
                     Ogre::Real &x, Ogre::Real &y, Ogre::Real& z)
             {
                 Ogre::Vector3 worldview = camera_->getViewMatrix() * position;
-                z = worldview.z;
+                /* z = worldview.z; */
                 //homogenous clip space, between -1, 1 is in frustum
                 Ogre::Vector3 hcsposition = camera_->getProjectionMatrix() * worldview;
+                z = hcsposition.z;
+                Matrix4 pm = camera_->getProjectionMatrix().inverse();
+                printf("projection (inverse): \n");
+                for (int i = 0; i < 4; i++) {
+                    for (int j = 0; j < 4; j++) {
+                        printf("%f ", pm[i][j]);
+                    }
+                    printf("\n");
+                }
+
+                Ogre::Vector3 worldview_t = pm * hcsposition;
 
                 /* absolute */
-                /* x = render_width() / 2; */
-                /* y = render_height() / 2; */
-                /* x += ( x * hcsposition.x ); */
-                /* y += ( y * -hcsposition.y ); */
-                x = worldview.x;
-                y = worldview.y;
+                cout << "  render_width=" << render_width() << endl;
+                cout << "  render_height=" << render_height() << endl;
+                x = render_width() / 2;
+                y = render_height() / 2;
+                x += ( x * hcsposition.x );
+                y += ( y * -hcsposition.y );
+                /* x = worldview.x; */
+                /* y = worldview.y; */
+                cout << "get2dposition" << endl;
+                cout << "  position = (" << position.x << ", " << position.y << ", " << position.z << ")" << endl;
+                cout << "  worldview = (" << worldview.x << ", " << worldview.y << ", " << worldview.z << ")" << endl;
+                cout << "  hcsposition = (" << hcsposition.x << ", " << hcsposition.y << ", " << hcsposition.z << ")" << endl;
+                cout << "  transformed = (" << x << ", " << y << ", " << z << ")" << endl;
+                cout << "  worldview_t = (" << worldview_t.x << ", " << worldview_t.y << ", " << worldview_t.z << ")" << endl;
             }
 
             // http://www.ogre3d.org/forums/viewtopic.php?f=1&t=55259
@@ -222,7 +241,7 @@ namespace libhand {
                 /* jointPositionMap[name] = cv::Vec3d( */
                 /*         (double)screen_x,(double)screen_y,(double)screen_z); */
                 jointPositionMap[name] = cv::Vec3d(
-                        (double)pos_world.x, (double)pos_world.y, (double)pos_world.z);
+                        (double)screen_x, (double)screen_y, (double)screen_z);
             }
 
             void walk_bones(HandRenderer::JointPositionMap &jointPositionMap, Node* bone = NULL, int depth = 0) {
@@ -253,7 +272,8 @@ namespace libhand {
                     // is finger tip?
                     Vector3 step = GetBoneWorldOrientation(dynamic_cast<Bone*>(bone), hand_entity_)
                         .yAxis().normalisedCopy();
-                    Vector3 tip_pos = pos_world + .4 * step;
+                    /* Vector3 tip_pos = pos_world + .4 * step; */
+                    Vector3 tip_pos = pos_world + 1.0f * step;
 
                     // write the 2d position of the finger tip
                     get2dposition(tip_pos, screen_x, screen_y, screen_z);
