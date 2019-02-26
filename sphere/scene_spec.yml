@@ -1,0 +1,17 @@
+%YAML:1.0
+
+# The directory containing all the meshes and .scene file
+# Note: The path is relative to this YAML file
+scene_dir: "ogre"
+
+# The .scene file name
+scene_file: "sphere.scene"
+
+# The name of the hand object entity in the scene
+hand_object_name: Sphere
+
+# The bone map:
+# Each entry corresponds to the bone name in the armature of the hand mesh
+bone_map:
+   - "Bone"
+   - "Bone.001"
