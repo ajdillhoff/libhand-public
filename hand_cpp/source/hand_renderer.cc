@@ -783,6 +783,21 @@ namespace libhand {
         cv::Mat eye4 = cv::Mat::eye(4,4,CV_64F);
         glGetDoublev(GL_PROJECTION_MATRIX,PROJ);
         glGetIntegerv(GL_VIEWPORT,VP);
+        printf("GL_PROJECTION_MATRIX: \n");
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                printf("%f ", PROJ[j * 4 + i]);
+            }
+            printf("\n");
+        }
+        printf("GL_MODELVIEW_MATRIX: \n");
+        for (int i = 0; i < 4; i++) {
+            printf("%d\n", VP[i]);
+        }
+        double min_oz = 99999.0;
+        double max_oz = 0.0;
+        double min_z = 99999.0;
+        double max_z = -99999.0;
         for(int xIter = 0; xIter < W; xIter++)
         {
             for(int yIter = 0; yIter < H; yIter++)
@@ -795,11 +810,26 @@ namespace libhand {
                     gluUnProject(xIter,yIter,z,
                             eye4.ptr<double>(0),PROJ,VP,&oX,&oY,&oZ);
                     Zout[xIter + (H-1-yIter)*W] = -oZ;
+                    if (-oZ < min_oz) {
+                        min_oz = -oZ;
+                    }
+                    if (-oZ > max_oz) {
+                        max_oz = -oZ;
+                    }
+                    if (z < min_z) {
+                        min_z = z;
+                    }
+                    if (z > max_z) {
+                        max_z = z;
+                    }
                 }
                 else
                     Zout[xIter + (H-1-yIter)*W] = numeric_limits<float>::infinity();
             }
-        }    
+        }
+
+        printf("min_z=%f  max_z=%f\n", min_z, max_z);
+        printf("min_oz=%f  max_oz=%f\n", min_oz, max_oz);
 
         return Zout;
     }
@@ -812,7 +842,7 @@ namespace libhand {
         glReadPixels(0,0,W,H,GL_DEPTH_COMPONENT,GL_FLOAT,&Z[0]);
         glFinish();
 
-        Z = unprojectZ(W,H, Z);    
+        Z = unprojectZ(W,H, Z);
         //Z = allocRawZ(W,H,Z);
 
         // convet to OCV
