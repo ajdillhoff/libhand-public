@@ -133,7 +133,7 @@ namespace libhand {
                 /* z = worldview.z; */
                 //homogenous clip space, between -1, 1 is in frustum
                 Ogre::Vector3 hcsposition = camera_->getProjectionMatrix() * worldview;
-                z = hcsposition.z;
+                z = worldview.z;
                 Matrix4 pm = camera_->getProjectionMatrix().inverse();
                 printf("projection (inverse): \n");
                 for (int i = 0; i < 4; i++) {
@@ -273,7 +273,7 @@ namespace libhand {
                     Vector3 step = GetBoneWorldOrientation(dynamic_cast<Bone*>(bone), hand_entity_)
                         .yAxis().normalisedCopy();
                     /* Vector3 tip_pos = pos_world + .4 * step; */
-                    Vector3 tip_pos = pos_world + .1 * step;
+                    Vector3 tip_pos = pos_world + 2.0 * step;
 
                     // write the 2d position of the finger tip
                     get2dposition(tip_pos, screen_x, screen_y, screen_z);
@@ -755,8 +755,11 @@ namespace libhand {
         }
 
         Vector3 c_pos = camera_->getRealPosition();
+        float hand_dist = CameraHandDistance();
         printf("position: \n");
         printf("%f %f %f\n", c_pos[0], c_pos[1], c_pos[2]);
+        printf("camera-hand distance: %f\n", hand_dist);
+        cv::Mat temp = depth_buffer_cv();
         viewport_->clear();
         root_->renderOneFrame();
         //render_target_->update(false);

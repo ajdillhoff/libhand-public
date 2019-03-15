@@ -5,14 +5,14 @@
 scene_dir: "ogre"
 
 # The .scene file name
-scene_file: "index.scene"
+scene_file: "cylinderv3.scene"
 
 # The name of the hand object entity in the scene
-hand_object_name: hand
+hand_object_name: Cylinder
 
 # The bone map:
 # Each entry corresponds to the bone name in the armature of the hand mesh
 bone_map:
    - "root"
-   - "prox"
-   - "int"
+   - "base"
+   - "mid"

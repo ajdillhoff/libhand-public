@@ -2,27 +2,27 @@
 <skeleton >
   <bones >
     <bone id="0" name="root" >
-      <position x="0.342443" y="-0.078361" z="-0.133349" />
-      <rotation angle="0.182747" >
-        <axis x="-0.012627" y="-0.804993" z="-0.593160" />
+      <position x="0.000000" y="0.000000" z="0.000000" />
+      <rotation angle="0.147067" >
+        <axis x="0.985833" y="-0.118610" z="-0.118610" />
       </rotation>
     </bone>
-    <bone id="1" name="finger4joint2" >
-      <position x="0.007654" y="0.014065" z="0.024291" />
-      <rotation angle="2.226954" >
-        <axis x="-0.531979" y="0.662108" z="0.527837" />
+    <bone id="1" name="prox" >
+      <position x="-0.000000" y="0.999109" z="-0.000000" />
+      <rotation angle="3.129987" >
+        <axis x="0.999899" y="0.003095" z="-0.013859" />
       </rotation>
     </bone>
-    <bone id="2" name="finger4joint3" >
-      <position x="0.000000" y="0.417063" z="0.000000" />
-      <rotation angle="0.295063" >
-        <axis x="-0.957827" y="0.089187" z="-0.273157" />
+    <bone id="2" name="int" >
+      <position x="-0.000000" y="1.339032" z="0.000000" />
+      <rotation angle="0.846913" >
+        <axis x="-0.024162" y="-0.981869" z="-0.188017" />
       </rotation>
     </bone>
   </bones>
   <bonehierarchy >
-    <boneparent bone="finger4joint2" parent="root" />
-    <boneparent bone="finger4joint3" parent="finger4joint2" />
+    <boneparent bone="prox" parent="root" />
+    <boneparent bone="int" parent="prox" />
   </bonehierarchy>
   <animations />
 </skeleton>
