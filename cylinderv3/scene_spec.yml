@@ -13,6 +13,5 @@ hand_object_name: Cylinder
 # The bone map:
 # Each entry corresponds to the bone name in the armature of the hand mesh
 bone_map:
-   - "root"
    - "base"
    - "mid"
