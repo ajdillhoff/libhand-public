@@ -13,8 +13,9 @@ hand_object_name: hand
 # The bone map:
 # Each entry corresponds to the bone name in the armature of the hand mesh
 bone_map:
-   - "finger1joint1"  # Will be joint(0) in the FullHandPose class
-   - "finger1joint2"  # Will be joint(1) in the FullHandPose class
+   - "metacarpals"    # Will be joint(0) in the FullHandPose class
+   - "finger1joint1"  # Will be joint(1) in the FullHandPose class
+   - "finger1joint2"  # Will be joint(2) in the FullHandPose class
    - "finger1joint3"  #    .. and so on ..
    - "finger2joint1"
    - "finger2joint2"
@@ -28,5 +29,3 @@ bone_map:
    - "finger5joint1"
    - "finger5joint2"
    - "finger5joint3"
-   - "metacarpals"
-   - "root"

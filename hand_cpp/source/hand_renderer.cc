@@ -273,7 +273,7 @@ namespace libhand {
                     Vector3 step = GetBoneWorldOrientation(dynamic_cast<Bone*>(bone), hand_entity_)
                         .yAxis().normalisedCopy();
                     /* Vector3 tip_pos = pos_world + .4 * step; */
-                    Vector3 tip_pos = pos_world + 1.5 * step;
+                    Vector3 tip_pos = pos_world + 0.384142 * step;
 
                     // write the 2d position of the finger tip
                     get2dposition(tip_pos, screen_x, screen_y, screen_z);
