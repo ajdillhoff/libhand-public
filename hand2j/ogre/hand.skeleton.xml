@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skeleton >
+  <bones >
+    <bone id="0" name="metacarpals" >
+      <position x="-0.013197" y="-0.066339" z="-0.063590" />
+      <rotation angle="1.742774" >
+        <axis x="0.982957" y="0.129991" z="0.129990" />
+      </rotation>
+    </bone>
+    <bone id="1" name="finger2joint1" >
+      <position x="0.158351" y="0.163755" z="-0.228703" />
+      <rotation angle="2.039236" >
+        <axis x="-0.808014" y="-0.585024" z="-0.069718" />
+      </rotation>
+    </bone>
+    <bone id="2" name="finger2joint2" >
+      <position x="0.000000" y="0.470265" z="-0.000000" />
+      <rotation angle="0.715456" >
+        <axis x="0.048004" y="0.717317" z="0.695092" />
+      </rotation>
+    </bone>
+    <bone id="3" name="finger2joint3" >
+      <position x="-0.000000" y="0.306010" z="0.000000" />
+      <rotation angle="0.301706" >
+        <axis x="0.305564" y="0.696217" z="0.649547" />
+      </rotation>
+    </bone>
+    <bone id="4" name="finger1joint1" >
+      <position x="0.391582" y="-0.157718" z="-0.689518" />
+      <rotation angle="1.665809" >
+        <axis x="-0.970825" y="-0.206231" z="-0.122340" />
+      </rotation>
+    </bone>
+    <bone id="5" name="finger1joint2" >
+      <position x="-0.000000" y="0.442255" z="0.000000" />
+      <rotation angle="0.408159" >
+        <axis x="0.992068" y="-0.053238" z="-0.113875" />
+      </rotation>
+    </bone>
+    <bone id="6" name="finger1joint3" >
+      <position x="-0.000000" y="0.185681" z="-0.000000" />
+      <rotation angle="0.346094" >
+        <axis x="0.815089" y="0.526276" z="0.242212" />
+      </rotation>
+    </bone>
+  </bones>
+  <bonehierarchy >
+    <boneparent bone="finger2joint1" parent="metacarpals" />
+    <boneparent bone="finger2joint2" parent="finger2joint1" />
+    <boneparent bone="finger2joint3" parent="finger2joint2" />
+    <boneparent bone="finger1joint1" parent="metacarpals" />
+    <boneparent bone="finger1joint2" parent="finger1joint1" />
+    <boneparent bone="finger1joint3" parent="finger1joint2" />
+  </bonehierarchy>
+  <animations />
+</skeleton>
