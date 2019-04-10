@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- exporter: blender2ogre 0.7.0 -->
-<!-- export_time: Thu, 28 Mar 2019 00:14:20 +0000 -->
+<!-- export_time: Mon, 08 Apr 2019 16:58:05 +0000 -->
 <!-- previous_export_time: Tue, 19 Mar 2019 19:49:15 +0000 -->
 <scene author="ajdillhoff" formatVersion="1.1" >
   <nodes >
     <node name="Armature" >
-      <position x="0.000000" y="-0.750000" z="-2.000000" />
+      <position x="0.000000" y="-0.75" z="-2.000000" />
       <rotation qw="1.000000" qx="0.000000" qy="0.000000" qz="-0.000000" />
       <scale x="1.000000" y="1.000000" z="1.000000" />
       <node name="hand_mesh" >
