@@ -259,6 +259,10 @@ namespace libhand {
                 //Vector3 position = bone->getPosition(); // NOTE: rel to parent, maybe should be zero for all?
                 //Vector3 pos_world = bone->convertLocalToWorldPosition(position);
                 Vector3 pos_world = getBoneWorldPosition(dynamic_cast<Bone*>(bone), hand_entity_);
+                Quaternion p = bone->_getDerivedOrientation();
+                Quaternion q = bone->getOrientation();
+                printf("**DERIVED (%f, %f, %f, %f)\n", p.w, p.x, p.y, p.z);
+                printf("**ORIENTATION (%f, %f, %f, %f)\n", q.w, q.x, q.y, q.z);
                 // converto nsc
                 Real screen_x, screen_y, screen_z;
                 get2dposition(pos_world, screen_x, screen_y, screen_z);
