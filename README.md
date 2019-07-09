@@ -20,3 +20,10 @@ Ogre 1.9 `apt install libogre-1.9-dev`
 
 ## CMake Modifications
 Added target link to `libtiff.so.5` for project `pose_designer`.
+
+# Troubleshooting
+
+## Could not load dynamic library `/usr/lib/OGRE/RenderSystem_GL.so`
+
+If you installed OGRE using the package manager, it was installed to `/usr/lib/x86_64-linux-gnu/OGRE-1.9.0/`.
+Simply link it to `/usr/lib/`: `sudo ln -s /usr/lib/x86_64-linux-gnu/OGRE-1.9.0/ /usr/lib/OGRE`.
