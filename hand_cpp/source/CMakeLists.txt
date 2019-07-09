@@ -139,6 +139,7 @@ TARGET_LINK_LIBRARIES(pose_designer
   ${Boost_LIBRARIES}
   ${GLUT_LIBRARIES}
   ${OPENGL_LIBRARIES}
+  /usr/lib/x86_64-linux-gnu/libtiff.so.5
 )
 
 SET(LibHand_INCLUDE_DIRS
