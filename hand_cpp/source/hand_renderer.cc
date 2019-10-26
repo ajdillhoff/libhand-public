@@ -715,14 +715,14 @@ namespace libhand {
         //   camera_node_->setPosition(Vector3::ZERO);
         //   camera_->lookAt(hand_node_->getPosition());
 
-        Matrix4 pm = camera_->getProjectionMatrixRS();
-        printf("projection: \n");
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                printf("%f ", pm[i][j]);
-            }
-            printf("\n");
-        }
+        //Matrix4 pm = camera_->getProjectionMatrixRS();
+        //printf("projection: \n");
+        //for (int i = 0; i < 4; i++) {
+            //for (int j = 0; j < 4; j++) {
+                //printf("%f ", pm[i][j]);
+            //}
+            //printf("\n");
+        //}
         //Matrix4 vm = camera_->getViewMatrix();
         //printf("view: \n");
         //for (int i = 0; i < 4; i++) {
