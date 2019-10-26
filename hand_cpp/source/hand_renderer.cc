@@ -83,6 +83,8 @@ namespace libhand {
 
             void SetHandPose(const FullHandPose &hand_pose, bool update_camera);
 
+            void SetHandPosition(Vector3 pos);
+
             void RenderHand();
 
             int render_width() const { return render_width_; }
@@ -94,6 +96,7 @@ namespace libhand {
 
             const cv::Mat pixel_buffer_cv() const;
             const cv::Mat depth_buffer_cv() const;
+            Vector3 CamPositionRelativeToHand() const;
 
             float initial_cam_distance() const { return initial_cam_distance_; }
             float CameraHandDistance();
@@ -110,72 +113,55 @@ namespace libhand {
                       + camera_spec_.GetPosition() );
                 camera_node_->setPosition(camera_pos_world);
                 camera_->setOrientation(camera_spec_.GetQuaternion());
-                //     cout << "camera_spec_pos: " << 
-                //       " r: " << camera_spec_.r << 
-                //       " phi: " << camera_spec_.phi << 
-                //       " theta: " << camera_spec_.theta << endl;;  
-                //     cout << "camera_pos_world: " << 
-                //       " x: " << camera_pos_world.x << 
-                //       " y: " << camera_pos_world.y << 
+                //     cout << "camera_spec_pos: " <<
+                //       " r: " << camera_spec_.r <<
+                //       " phi: " << camera_spec_.phi <<
+                //       " theta: " << camera_spec_.theta << endl;;
+                //     cout << "camera_pos_world: " <<
+                //       " x: " << camera_pos_world.x <<
+                //       " y: " << camera_pos_world.y <<
                 //       " z: " << camera_pos_world.z << endl;
-                //     cout << "hand_node_pos: " << 
-                //       " x: " << hand_node_->getPosition().x << 
-                //       " y: " << hand_node_->getPosition().x << 
-                //       " z: " << hand_node_->getPosition().x << endl;;        
+                //     cout << "hand_node_pos: " <<
+                //       " x: " << hand_node_->getPosition().x <<
+                //       " y: " << hand_node_->getPosition().x <<
+                //       " z: " << hand_node_->getPosition().x << endl;;
             }
 
             // http://www.ogre3d.org/forums/viewtopic.php?t=36034&highlight=
             void get2dposition(
-                    const Ogre::Vector3 &position, 
+                    const Ogre::Vector3 &position,
                     Ogre::Real &x, Ogre::Real &y, Ogre::Real& z)
             {
                 Ogre::Vector3 worldview = camera_->getViewMatrix() * position;
-                /* z = worldview.z; */
                 //homogenous clip space, between -1, 1 is in frustum
                 Ogre::Vector3 hcsposition = camera_->getProjectionMatrix() * worldview;
                 z = worldview.z;
-                Matrix4 pm = camera_->getProjectionMatrix().inverse();
-                printf("projection (inverse): \n");
-                for (int i = 0; i < 4; i++) {
-                    for (int j = 0; j < 4; j++) {
-                        printf("%f ", pm[i][j]);
-                    }
-                    printf("\n");
-                }
-
-                Ogre::Vector3 worldview_t = pm * hcsposition;
 
                 /* absolute */
-                cout << "  render_width=" << render_width() << endl;
-                cout << "  render_height=" << render_height() << endl;
                 x = render_width() / 2;
                 y = render_height() / 2;
                 x += ( x * hcsposition.x );
                 y += ( y * -hcsposition.y );
-                /* x = worldview.x; */
-                /* y = worldview.y; */
-                cout << "get2dposition" << endl;
-                cout << "  position = (" << position.x << ", " << position.y << ", " << position.z << ")" << endl;
-                cout << "  worldview = (" << worldview.x << ", " << worldview.y << ", " << worldview.z << ")" << endl;
-                cout << "  hcsposition = (" << hcsposition.x << ", " << hcsposition.y << ", " << hcsposition.z << ")" << endl;
-                cout << "  transformed = (" << x << ", " << y << ", " << z << ")" << endl;
-                cout << "  worldview_t = (" << worldview_t.x << ", " << worldview_t.y << ", " << worldview_t.z << ")" << endl;
+
+                /* relative */
+                // x = 0.5f + (0.5f * hcsposition.x);
+                // y = 0.5f + (0.5f * -hcsposition.y);
             }
 
             // http://www.ogre3d.org/forums/viewtopic.php?f=1&t=55259
             // http://www.ogre3d.org/forums/viewtopic.php?f=2&t=49051
-            Vector3 getBoneWorldPosition(Bone*bone,Entity*entity)
+            Vector3 getBoneWorldPosition(Bone* bone, Entity* entity)
             {
                 //[bone] = bone for which you are trying to get the world position [Bone*].
                 //[entity] = The entity to which the bone's skeleton belongs to [Entity*].
                 //[world position] = output parameter [Vector3].
 
-                Vector3 world_position = bone->_getDerivedPosition(); 
+                Vector3 world_position = bone->_getDerivedPosition();
 
                 //multiply with the parent derived transformation
                 Ogre::Node* pParentNode = entity->getParentNode();
                 Ogre::Node* pSceneNode = entity->getParentSceneNode();
-                while (pParentNode != NULL) 
+                while (pParentNode != NULL)
                 {
                     //process the current i_Node
                     if (pParentNode != pSceneNode)
@@ -193,7 +179,7 @@ namespace libhand {
                 }
 
                 return world_position;
-            }  
+            }
 
             // http://www.ogre3d.org/forums/viewtopic.php?f=1&t=55259
             Quaternion GetBoneWorldOrientation(Bone*bone,Entity*ent)
@@ -209,7 +195,7 @@ namespace libhand {
                     if (pParentNode != pSceneNode)
                     {
                         //this is a tag point (a connection point between 2 entities). which means it has a parent i_Node to be processed
-                        world_orientation = 
+                        world_orientation =
                             dynamic_cast<Ogre::TagPoint*>(pParentNode)->_getDerivedOrientation() * world_orientation;
                         pParentNode = dynamic_cast<Ogre::TagPoint*>(pParentNode)->getParentEntity()->getParentNode();
                     }
@@ -233,7 +219,7 @@ namespace libhand {
                 /*     printf("r(%s) @ (%f %f %f)\n",name.c_str(), */
                 /*         (double)screen_x,(double)screen_y,(double)0); */
                 /* } */
-                    printf("\t");
+                    //printf("\t");
                     /* for(int iter = 0; iter < depth; iter++) { */
                     /* printf("w(%s) @ (%f %f %f)\n",name.c_str(), */
                     /*     (double)pos_world.x,(double)pos_world.y,(double)pos_world.z); */
@@ -250,20 +236,13 @@ namespace libhand {
                     bone = hand_skeleton_->getRootBone();
                     // print the BB as well
                     AxisAlignedBox bb = hand_entity_->getBoundingBox();
-                    //cout << "hand radius: " << hand_entity_->getBoundingRadius() << endl;
                 }
 
                 // print the bone's info
                 string name = bone->getName();
-                //Vector3 position = Vector3(0,0,0);
-                //Vector3 position = bone->getPosition(); // NOTE: rel to parent, maybe should be zero for all?
-                //Vector3 pos_world = bone->convertLocalToWorldPosition(position);
                 Vector3 pos_world = getBoneWorldPosition(dynamic_cast<Bone*>(bone), hand_entity_);
-                Quaternion p = bone->_getDerivedOrientation();
-                Quaternion q = bone->getOrientation();
-                printf("**DERIVED (%f, %f, %f, %f)\n", p.w, p.x, p.y, p.z);
-                printf("**ORIENTATION (%f, %f, %f, %f)\n", q.w, q.x, q.y, q.z);
-                // converto nsc
+
+                // convert to NDC
                 Real screen_x, screen_y, screen_z;
                 get2dposition(pos_world, screen_x, screen_y, screen_z);
 
@@ -371,6 +350,9 @@ namespace libhand {
             bool update_camera) {
         private_->SetHandPose(hand_pose, update_camera);
     }
+    void HandRenderer::SetHandPosition(Vector3 pos) {
+        private_->SetHandPosition(pos);
+    }
     void HandRenderer::RenderHand() { private_->RenderHand(); }
 
     float HandRenderer::initial_cam_distance() const {
@@ -389,11 +371,17 @@ namespace libhand {
     const char *HandRenderer::pixel_buffer_raw() const {
         return private_->pixel_buffer_raw();
     }
+
     const cv::Mat HandRenderer::pixel_buffer_cv() const {
         return private_->pixel_buffer_cv();
     }
+
     const cv::Mat HandRenderer::depth_buffer_cv() const {
         return private_->depth_buffer_cv();
+    }
+
+    const Vector3 HandRenderer::CamPositionRelativeToHand() const {
+        return private_->CamPositionRelativeToHand();
     }
 
     void HandRenderer::GetMeshVertices(size_t &vertex_count,
@@ -690,6 +678,10 @@ namespace libhand {
         }
     }
 
+    void HandRendererPrivate::SetHandPosition(Vector3 pos) {
+        hand_node_->setPosition(pos);
+    }
+
     bool HandRenderer::z_inverted() const
     {
         return private_->z_inverted();
@@ -697,7 +689,7 @@ namespace libhand {
 
     bool HandRendererPrivate::z_inverted() const
     {
-        return camera_node_->getPosition().z < 0;  
+        return camera_node_->getPosition().z < 0;
     }
 
     double HandRenderer::z_far() const
@@ -719,10 +711,10 @@ namespace libhand {
         //Vector3 pos = camera_spec_.GetPosition();
         //cout << "hand position: " << pos.x << ", " << pos.y << ", " << pos.z << endl;
         //   hand_node_->setOrientation(camera_spec_.GetQuaternion());
-        //   
+        //
         //   camera_node_->setPosition(Vector3::ZERO);
         //   camera_->lookAt(hand_node_->getPosition());
-        
+
         Matrix4 pm = camera_->getProjectionMatrixRS();
         printf("projection: \n");
         for (int i = 0; i < 4; i++) {
@@ -731,39 +723,36 @@ namespace libhand {
             }
             printf("\n");
         }
-        Matrix4 vm = camera_->getViewMatrix();
-        printf("view: \n");
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                printf("%f ", vm[i][j]);
-            }
-            printf("\n");
-        }
-        Matrix4 wm = Matrix4();
-        camera_->getWorldTransforms(&wm);
-        printf("world: \n");
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                printf("%f ", wm[i][j]);
-            }
-            printf("\n");
-        }
+        //Matrix4 vm = camera_->getViewMatrix();
+        //printf("view: \n");
+        //for (int i = 0; i < 4; i++) {
+            //for (int j = 0; j < 4; j++) {
+                //printf("%f ", vm[i][j]);
+            //}
+            //printf("\n");
+        //}
+        //Matrix4 wm = Matrix4();
+        //camera_->getWorldTransforms(&wm);
+        //printf("world: \n");
+        //for (int i = 0; i < 4; i++) {
+            //for (int j = 0; j < 4; j++) {
+                //printf("%f ", wm[i][j]);
+            //}
+            //printf("\n");
+        //}
 
-        Matrix4 tm = pm * vm * wm;
-        printf("transform: \n");
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                printf("%f ", tm[i][j]);
-            }
-            printf("\n");
-        }
+        //Matrix4 tm = pm * vm * wm;
+        //printf("transform: \n");
+        //for (int i = 0; i < 4; i++) {
+            //for (int j = 0; j < 4; j++) {
+                //printf("%f ", tm[i][j]);
+            //}
+            //printf("\n");
+        //}
 
         Vector3 c_pos = camera_->getRealPosition();
         float hand_dist = CameraHandDistance();
-        printf("position: \n");
-        printf("%f %f %f\n", c_pos[0], c_pos[1], c_pos[2]);
-        printf("camera-hand distance: %f\n", hand_dist);
-        cv::Mat temp = depth_buffer_cv();
+        //cv::Mat temp = depth_buffer_cv();
         viewport_->clear();
         root_->renderOneFrame();
         //render_target_->update(false);
@@ -788,19 +777,27 @@ namespace libhand {
         int VP[4]; // w x w h
         // set MV matrix to identity glGetDoublev(GL_MODELVIEW_MATRIX, MV);
         cv::Mat eye4 = cv::Mat::eye(4,4,CV_64F);
+        //glGetDoublev(GL_MODELVIEW_MATRIX, MV);
         glGetDoublev(GL_PROJECTION_MATRIX,PROJ);
         glGetIntegerv(GL_VIEWPORT,VP);
-        printf("GL_PROJECTION_MATRIX: \n");
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                printf("%f ", PROJ[j * 4 + i]);
-            }
-            printf("\n");
-        }
-        printf("GL_MODELVIEW_MATRIX: \n");
-        for (int i = 0; i < 4; i++) {
-            printf("%d\n", VP[i]);
-        }
+        //printf("GL_MODELVIEW_MATRIX: \n");
+        //for (int i = 0; i < 4; i++) {
+            //for (int j = 0; j < 4; j++) {
+                //printf("%f ", MV[j * 4 + i]);
+            //}
+            //printf("\n");
+        //}
+        //printf("GL_PROJECTION_MATRIX: \n");
+        //for (int i = 0; i < 4; i++) {
+            //for (int j = 0; j < 4; j++) {
+                //printf("%f ", PROJ[j * 4 + i]);
+            //}
+            //printf("\n");
+        //}
+        //printf("GL_VIEWPORT_MATRIX: \n");
+        //for (int i = 0; i < 4; i++) {
+            //printf("%d\n", VP[i]);
+        //}
         double min_oz = 99999.0;
         double max_oz = 0.0;
         double min_z = 99999.0;
@@ -816,27 +813,25 @@ namespace libhand {
                     double oX, oY, oZ;
                     gluUnProject(xIter,yIter,z,
                             eye4.ptr<double>(0),PROJ,VP,&oX,&oY,&oZ);
+                    //gluUnProject(xIter,yIter,z,MV,PROJ,VP,&oX,&oY,&oZ);
                     Zout[xIter + (H-1-yIter)*W] = -oZ;
-                    if (-oZ < min_oz) {
-                        min_oz = -oZ;
-                    }
-                    if (-oZ > max_oz) {
-                        max_oz = -oZ;
-                    }
-                    if (z < min_z) {
-                        min_z = z;
-                    }
-                    if (z > max_z) {
-                        max_z = z;
-                    }
+                    //if (-oZ < min_oz) {
+                        //min_oz = -oZ;
+                    //}
+                    //if (-oZ > max_oz) {
+                        //max_oz = -oZ;
+                    //}
+                    //if (z < min_z) {
+                        //min_z = z;
+                    //}
+                    //if (z > max_z) {
+                        //max_z = z;
+                    //}
                 }
                 else
                     Zout[xIter + (H-1-yIter)*W] = numeric_limits<float>::infinity();
             }
         }
-
-        printf("min_z=%f  max_z=%f\n", min_z, max_z);
-        printf("min_oz=%f  max_oz=%f\n", min_oz, max_oz);
 
         return Zout;
     }
@@ -849,8 +844,7 @@ namespace libhand {
         glReadPixels(0,0,W,H,GL_DEPTH_COMPONENT,GL_FLOAT,&Z[0]);
         glFinish();
 
-        Z = unprojectZ(W,H, Z);
-        //Z = allocRawZ(W,H,Z);
+        Z = unprojectZ(W,H,Z);
 
         // convet to OCV
         Zrnd = cv::Mat_<float>(H,W,&Z[0]).clone();

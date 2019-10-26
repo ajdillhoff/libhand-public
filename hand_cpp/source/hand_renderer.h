@@ -70,6 +70,9 @@ class HandRenderer {
   void SetHandPose(const FullHandPose &hand_pose,
                    bool update_camera = false);
 
+  // Update position of the hand. The camera position is not affected.
+  void SetHandPosition(Ogre::Vector3 pos);
+
   // Read and write accessors to camera information.
   HandCameraSpec camera_spec() const;
   void set_camera_spec(const HandCameraSpec &camera_spec);
@@ -93,6 +96,7 @@ class HandRenderer {
   const cv::Mat pixel_buffer_cv() const;
   // Return the depth buffer as a floating point image
   const cv::Mat depth_buffer_cv() const;
+  const Ogre::Vector3 CamPositionRelativeToHand() const;
   bool z_inverted() const;
   double z_near() const;
   double z_far() const;
