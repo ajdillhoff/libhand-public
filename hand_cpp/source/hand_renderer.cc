@@ -669,8 +669,8 @@ namespace libhand {
             HandJoint joint_angle = hand_pose.joint(bone_no);
 
             bone->rotate(joint_angle.ToQuaternion(), Node::TS_LOCAL);
-            //bone->setInheritScale(false);
-            //bone->setScale(Ogre::Vector3(joint_angle.swelling,joint_angle.elongation, joint_angle.dilation));
+            bone->setInheritScale(false);
+            bone->setScale(Ogre::Vector3(joint_angle.swelling, joint_angle.elongation, joint_angle.dilation));
         }
 
         if (update_camera) {

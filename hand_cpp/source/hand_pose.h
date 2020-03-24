@@ -74,6 +74,8 @@ struct HandJoint {
   HandJoint() : bend(0), side(0), twist(0), swelling(1), dilation(1), elongation(1) {}
   HandJoint(float bend_in, float side_in, float twist_in) :
   bend(bend_in), side(side_in), twist(twist_in), swelling(1), dilation(1), elongation(1) {}
+  HandJoint(float bend_in, float side_in, float twist_in, float swelling_in, float dilation_in, float elongation_in) :
+   bend(bend_in), side(side_in), twist(twist_in), swelling(swelling_in), dilation(dilation_in), elongation(elongation_in) {}
 
   HandJoint(const Ogre::Quaternion &q);
   Ogre::Quaternion ToQuaternion();
@@ -127,7 +129,6 @@ public:
   float &side(int joint);
   float twist(int joint) const;
   float &twist(int joint);
-  // 
   float swelling(int joint) const;
   float &swelling(int joint);
   float dilation(int joint) const;
@@ -191,7 +192,7 @@ private:
 
   int num_joints_;
   vector<float> data_;
-  
+
   friend void write(cv::FileStorage&, string&, const FullHandPose&);
   friend void read(const cv::FileNode&, libhand::FullHandPose&, libhand::FullHandPose);
 };
@@ -290,7 +291,10 @@ inline float& FullHandPose::elongation(int joint)  {
 inline HandJoint FullHandPose::joint(int joint) const {
   return HandJoint(bend(joint),
                    side(joint),
-                   twist(joint));
+                   twist(joint),
+                   swelling(joint),
+                   dilation(joint),
+                   elongation(joint));
 }
 
 inline void FullHandPose::set_joint(int joint_num,
