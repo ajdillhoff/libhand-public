@@ -104,6 +104,7 @@ class HandRenderer {
   //
   typedef map<string, cv::Vec3d> JointPositionMap;
   void walk_bones(JointPositionMap &jointPositionMap);
+  void getWorldJoints(JointPositionMap &jointPositionMap);
 
   void GetMeshVertices(size_t &vertex_count, Ogre::Vector3* &vertices);
  private:

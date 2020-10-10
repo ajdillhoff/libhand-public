@@ -150,8 +150,7 @@ namespace libhand {
 
             // http://www.ogre3d.org/forums/viewtopic.php?f=1&t=55259
             // http://www.ogre3d.org/forums/viewtopic.php?f=2&t=49051
-            Vector3 getBoneWorldPosition(Bone* bone, Entity* entity)
-            {
+            Vector3 getBoneWorldPosition(Bone* bone, Entity* entity) {
                 //[bone] = bone for which you are trying to get the world position [Bone*].
                 //[entity] = The entity to which the bone's skeleton belongs to [Entity*].
                 //[world position] = output parameter [Vector3].
@@ -209,28 +208,53 @@ namespace libhand {
                 return world_orientation;
             }
 
-            void emit_bone(
-                    int depth, double screen_x, double screen_y, double screen_z,
-                    string name, Vector3 pos_world,
-                    HandRenderer::JointPositionMap&jointPositionMap)
-            {
-                /* for(int iter = 0; iter < depth; iter++) { */
-                /*     printf("\t"); */
-                /*     printf("r(%s) @ (%f %f %f)\n",name.c_str(), */
-                /*         (double)screen_x,(double)screen_y,(double)0); */
-                /* } */
-                    //printf("\t");
-                    /* for(int iter = 0; iter < depth; iter++) { */
-                    /* printf("w(%s) @ (%f %f %f)\n",name.c_str(), */
-                    /*     (double)pos_world.x,(double)pos_world.y,(double)pos_world.z); */
-                /* } */
-                /* jointPositionMap[name] = cv::Vec3d( */
-                /*         (double)screen_x,(double)screen_y,(double)screen_z); */
+            void emit_bone(int depth, double screen_x, double screen_y,
+                           double screen_z, string name, Vector3 pos_world,
+                           HandRenderer::JointPositionMap&jointPositionMap) {
+
                 jointPositionMap[name] = cv::Vec3d(
                         (double)screen_x, (double)screen_y, (double)screen_z);
             }
 
-            void walk_bones(HandRenderer::JointPositionMap &jointPositionMap, Node* bone = NULL, int depth = 0) {
+            void getWorldJoints(HandRenderer::JointPositionMap &jointPositionMap,
+                    Node* bone = NULL, int depth = 0) {
+
+                // default to the root bone
+                if (bone == NULL) {
+                    bone = hand_skeleton_->getRootBone();
+                }
+
+                // print the bone's info
+                string name = bone->getName();
+                Vector3 pos_world = getBoneWorldPosition(dynamic_cast<Bone*>(bone), hand_entity_);
+                pos_world = camera_->getViewMatrix() * pos_world;
+
+                jointPositionMap[name] = cv::Vec3d((double) pos_world[0],
+                        (double) pos_world[1],
+                        (double) pos_world[2]);
+
+                // call recursively on the children
+                if (bone->numChildren() == 0) {
+                    // is finger tip?
+                    Vector3 step = GetBoneWorldOrientation(dynamic_cast<Bone*>(bone), hand_entity_)
+                        .yAxis().normalisedCopy();
+                    Vector3 tip_pos = pos_world + 0.4 * 0.06 * step;
+                    tip_pos = camera_->getViewMatrix() * pos_world;
+
+                    // write the position of the finger tip
+                    jointPositionMap[name + "tip"] = cv::Vec3d((double) tip_pos[0],
+                            (double) tip_pos[1],
+                            (double) tip_pos[2]);
+                } else {
+                    for (int child_iter = 0; child_iter < bone->numChildren(); child_iter++) {
+                        getWorldJoints(jointPositionMap, bone->getChild(child_iter), depth + 1);
+                    }
+                }
+
+            }
+
+            void walk_bones(HandRenderer::JointPositionMap &jointPositionMap,
+                            Node* bone = NULL, int depth = 0) {
                 // default to the root bone
                 if (bone == NULL) {
                     bone = hand_skeleton_->getRootBone();
@@ -335,6 +359,10 @@ namespace libhand {
     {
         private_->walk_bones(jointPositionMap);
         //jointPositionMap.erase(jointPositionMap.find("root"));
+    }
+
+    void HandRenderer::getWorldJoints(HandRenderer::JointPositionMap& jointPositionMap) {
+        private_->getWorldJoints(jointPositionMap);
     }
 
     void HandRenderer::Setup(int width, int height) {
@@ -679,7 +707,8 @@ namespace libhand {
     }
 
     void HandRendererPrivate::SetHandPosition(Vector3 pos) {
-        hand_node_->setPosition(pos);
+        //hand_node_->setPosition(pos);
+        hand_node_->translate(pos, Ogre::Node::TS_WORLD);
     }
 
     bool HandRenderer::z_inverted() const
@@ -701,8 +730,6 @@ namespace libhand {
     {
         return private_->camera_->getNearClipDistance();
     }
-
-
 
     void HandRendererPrivate::RenderHand() {
         InitChecks();
