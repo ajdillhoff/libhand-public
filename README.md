@@ -36,4 +36,4 @@ If you cannot build `posedesigner` due to the following errors:
 //usr/lib/x86_64-linux-gnu/libSM.so.6: undefined reference to `uuid_generate@UUID_1.0'
 ```
 
-You need to temporarily remove Anaconda from your path. See [https://stackoverflow.com/questions/45584275/getting-error-usr-lib-lib64-libsm-so-undefined-reference-to-uuid-unparse-l](this thread) for more information.
+You need to temporarily remove Anaconda from your path. See [this thread](https://stackoverflow.com/questions/45584275/getting-error-usr-lib-lib64-libsm-so-undefined-reference-to-uuid-unparse-l) for more information.
